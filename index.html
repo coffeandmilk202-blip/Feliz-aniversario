@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#19223a">
+<title>Para Ángel · 22 de septiembre</title>
+<style>
+:root{
+  --night:#172038;--night2:#222a47;--paper:#fff8ee;--cream:#f7ead8;
+  --rose:#b9687a;--rose2:#d58b98;--gold:#e0b65c;--gold2:#f0d690;
+  --green:#66816b;--ink:#443b3a;--muted:#776c69;
+  --shadow:0 22px 55px rgba(18,24,44,.22);--ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{
+  margin:0;min-height:100svh;overflow-x:hidden;
+  font-family:ui-rounded,"Segoe UI",system-ui,-apple-system,sans-serif;
+  color:var(--ink);
+  background:linear-gradient(180deg,var(--night) 0 19%,#ebe0d2 46%,#f8efe5 100%);
+  -webkit-tap-highlight-color:transparent;
+}
+button{font:inherit} button:focus-visible{outline:3px solid rgba(240,214,144,.65);outline-offset:4px}
+.sky{position:fixed;inset:0 0 auto 0;height:52svh;pointer-events:none;overflow:hidden;z-index:0}
+.star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff7db;opacity:.55;animation:twinkle 3.6s ease-in-out infinite}
+@keyframes twinkle{50%{opacity:.15;transform:scale(.72)}}
+.moon{position:absolute;right:8vw;top:7vh;width:84px;height:84px;border-radius:50%;background:#ffeab0;box-shadow:0 0 45px rgba(255,234,176,.27)}
+.moon:after{content:"";position:absolute;width:78px;height:78px;border-radius:50%;background:var(--night2);left:-19px;top:-8px}
+.hill{position:absolute;left:-10%;right:-10%;bottom:-3px;height:120px;background:#26374a;border-radius:50% 50% 0 0/35% 35% 0 0;opacity:.75}
+.app{position:relative;z-index:1;width:min(100%,820px);margin:auto}
+.screen{min-height:100svh;padding:max(24px,env(safe-area-inset-top)) 18px max(48px,env(safe-area-inset-bottom))}
+.intro{display:grid;place-items:center;text-align:center;color:#fff7ec;transition:.65s var(--ease)}
+.intro.hide{opacity:0;transform:translateY(-10px);pointer-events:none}
+.intro-card{width:min(100%,450px);padding:42px 24px 30px;border:1px solid rgba(255,255,255,.12);
+  border-radius:34px;background:rgba(29,38,65,.58);backdrop-filter:blur(11px);box-shadow:var(--shadow)}
+.intro .date{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#f3d995;font-weight:800}
+.intro h1{font-family:Georgia,serif;font-size:clamp(2.3rem,11vw,4rem);margin:18px 0 8px;font-weight:600}
+.intro p{line-height:1.65;color:#e9dfd8;margin:0 auto;max-width:28ch}
+.open{margin-top:26px;border:0;border-radius:999px;padding:14px 25px;min-height:52px;background:linear-gradient(#d07b8d,#ae596d);
+  color:white;font-weight:800;box-shadow:0 14px 28px rgba(150,67,87,.28);cursor:pointer}
+.gift{display:none}.gift.show{display:block;animation:fadein .8s var(--ease)} @keyframes fadein{from{opacity:0;transform:translateY(12px)}}
+.hero{text-align:center;color:#fff7ec;padding:16px 0 44px}
+.hero h2{font-family:Georgia,serif;font-size:clamp(2rem,8vw,3.3rem);margin:14px auto 8px;max-width:13ch;font-weight:600}
+.hero p{max-width:34ch;margin:auto;color:#e4d9d3;line-height:1.65}
+.music{margin-top:16px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.08);color:#fff6ee;
+  min-height:44px;padding:10px 15px;border-radius:999px;cursor:pointer}
+.paper-section{margin:0 auto 26px;width:min(100%,680px);padding:28px 22px;border-radius:31px;
+  background:rgba(255,248,238,.96);border:1px solid rgba(107,78,69,.1);box-shadow:var(--shadow)}
+.kicker{text-align:center;text-transform:uppercase;letter-spacing:.13em;font-size:.73rem;font-weight:800;color:#9a7340;margin:0 0 8px}
+.title{font-family:Georgia,serif;text-align:center;font-size:clamp(1.65rem,7vw,2.45rem);line-height:1.15;color:#6b3743;margin:0}
+.sub{text-align:center;color:var(--muted);line-height:1.6;max-width:38ch;margin:11px auto 0}
+.flower-divider{display:flex;justify-content:center;gap:8px;margin:18px 0;color:#ba7f57}
+.cards{display:grid;gap:13px;margin-top:22px}
+.card{padding:19px;border-radius:23px;background:#fffdf9;border:1px solid rgba(101,69,62,.09);box-shadow:0 9px 24px rgba(76,49,42,.06)}
+.card b{color:#7f4250}.card p{margin:8px 0 0;line-height:1.68;color:#625754}
+.game-wrap{
+  position:relative;
+  margin-top:22px;
+  min-height:390px;
+  border-radius:28px;
+  overflow:hidden;
+  background:linear-gradient(#202b4b 0 67%,#30473e 67% 100%);
+  border:1px solid rgba(255,255,255,.08);
+  touch-action:manipulation;
+}
+.game-wrap:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 30%,rgba(255,255,255,.06),transparent 24%),
+    radial-gradient(circle at 77% 22%,rgba(255,255,255,.05),transparent 23%);
+}
+.game-hud{
+  position:relative;
+  z-index:4;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:8px;
+  align-items:center;
+  padding:13px 14px 0;
+  color:#fff6dc;
+  font-weight:800;
+  font-size:.88rem;
+}
+.game-hud .level{text-align:left}
+.game-hud .counter{text-align:center;padding:0}
+.game-hud .time{text-align:right}
+.game-bar{
+  position:relative;
+  z-index:4;
+  height:7px;
+  margin:10px 14px 0;
+  border-radius:999px;
+  background:rgba(255,255,255,.10);
+  overflow:hidden;
+}
+.game-bar span{
+  display:block;
+  height:100%;
+  width:100%;
+  transform-origin:left center;
+  background:linear-gradient(90deg,#ffe98e,#efb86e);
+  transition:transform .15s linear;
+}
+.game-instruction{
+  position:relative;
+  z-index:4;
+  margin:10px 14px 0;
+  text-align:center;
+  color:#dfe6ef;
+  font-size:.82rem;
+  line-height:1.45;
+}
+.firefly{
+  position:absolute;
+  width:46px;
+  height:46px;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  z-index:2;
+  transform:translate(-50%,-50%);
+  touch-action:manipulation;
+}
+.firefly:before{
+  content:"";
+  position:absolute;
+  left:16px;
+  top:16px;
+  width:13px;
+  height:13px;
+  border-radius:50%;
+  background:#ffe98e;
+  box-shadow:0 0 8px #ffe98e,0 0 20px rgba(255,233,142,.8),0 0 34px rgba(255,233,142,.45);
+  animation:glow 1.2s ease-in-out infinite;
+}
+.firefly:after{
+  content:"";
+  position:absolute;
+  inset:9px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:50%;
+}
+@keyframes glow{50%{transform:scale(.72);opacity:.55}}
+.firefly.caught{pointer-events:none;animation:caught .28s forwards}
+@keyframes caught{to{transform:translate(-50%,-50%) scale(.25);opacity:0}}
+.firefly.decoy:before{
+  background:#c2c9df;
+  box-shadow:0 0 8px #c2c9df,0 0 18px rgba(194,201,223,.45);
+}
+.game-message{
+  display:none;
+  margin:18px 16px 16px;
+  padding:18px;
+  border-radius:21px;
+  text-align:center;
+  background:rgba(255,250,238,.95);
+  color:#69404a;
+  font-family:Georgia,serif;
+  font-size:1.12rem;
+  line-height:1.5;
+  position:relative;
+  z-index:5;
+}
+.game-message.show{display:block;animation:pop .55s var(--ease)}
+.game-next{
+  display:none;
+  margin:12px auto 16px;
+  position:relative;
+  z-index:5;
+  border:0;
+  border-radius:999px;
+  padding:11px 18px;
+  background:#7f4250;
+  color:white;
+  font-weight:800;
+  cursor:pointer;
+}
+.game-next.show{display:block}
+.game-fail{
+  display:none;
+  position:absolute;
+  inset:auto 14px 16px;
+  z-index:6;
+  padding:16px;
+  border-radius:20px;
+  background:rgba(255,250,238,.96);
+  color:#67444d;
+  text-align:center;
+  box-shadow:0 12px 28px rgba(20,26,45,.2);
+}
+.game-fail.show{display:block;animation:pop .35s var(--ease)}
+.game-fail button{
+  margin-top:10px;
+  border:0;
+  border-radius:999px;
+  padding:10px 16px;
+  background:#7f4250;
+  color:white;
+  font-weight:800;
+  cursor:pointer;
+}
+@keyframes pop{from{opacity:0;transform:scale(.95)}}
+.secret-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}
+.secret{border:1px solid rgba(127,66,80,.1);background:#fffdfa;border-radius:22px;padding:16px;min-height:120px;cursor:pointer;text-align:left;color:var(--ink)}
+.secret .front{font-weight:800;color:#7f4250}.secret .back{display:none;margin-top:8px;line-height:1.55;color:#645856;font-size:.92rem}
+.secret.opened{background:#fbf0ee}.secret.opened .back{display:block;animation:fadein .4s var(--ease)}
+.letter{margin-top:20px;padding:26px 22px;border-radius:26px 29px 25px 31px;background:#fffdf8;border:1px solid rgba(104,72,64,.1);
+  box-shadow:0 14px 34px rgba(76,49,42,.08);transform:rotate(-.25deg)}
+.letter h3{font-family:Georgia,serif;color:#6b3743;font-size:1.65rem;margin:0}
+.letter p{line-height:1.78;color:#5d5350;margin:15px 0 0}
+.final-btn{display:block;margin:22px auto 0;border:0;border-radius:999px;padding:12px 19px;background:#7f4250;color:#fff;font-weight:800;cursor:pointer}
+.final-note{display:none;text-align:center;margin:16px auto 0;padding:19px;border-radius:22px;background:#f5e4e3;color:#6e3f49;font-family:Georgia,serif;font-size:1.25rem}
+.final-note.show{display:block;animation:pop .5s var(--ease)}
+footer{text-align:center;color:#6b3743;padding:34px 14px 20px}
+footer h3{font-family:Georgia,serif;font-size:2rem;margin:0 0 7px} footer p{color:#7d706d;line-height:1.6;max-width:32ch;margin:auto}
+@media(min-width:700px){.cards{grid-template-columns:repeat(3,1fr)}.secret-list{grid-template-columns:repeat(3,1fr)}.paper-section{padding:32px}}
+@media(max-width:390px){.paper-section{padding:24px 16px}.secret-list{gap:9px}.secret{padding:14px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}.star{display:none}}
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true">
+  <div class="moon"></div>
+  <div class="hill"></div>
+</div>
+
+<main class="app">
+<section class="screen intro" id="intro">
+  <div class="intro-card">
+    <div class="date">22 de septiembre</div>
+    <h1>Ángel</h1>
+    <p>Hoy guardé un pequeño rincón para nosotros.</p>
+    <button class="open" id="openGift" type="button">Entrar</button>
+  </div>
+</section>
+
+<section class="screen gift" id="gift" hidden>
+  <header class="hero">
+    <div class="date">22 · 09</div>
+    <h2>Feliz aniversario, mi amor</h2>
+    <p>Quise hacerte algo distinto. Un lugar pequeño para recordar lo que significas para mí.</p>
+    <button class="music" id="musicBtn" type="button" aria-pressed="false">♪ Poner música</button>
+    <audio id="music" loop preload="none"><source src="musica.mp3" type="audio/mpeg"></audio>
+  </header>
+
+  <section class="paper-section">
+    <p class="kicker">Antes de seguir</p>
+    <h2 class="title">Tres cosas que quiero conservar</h2>
+    <div class="flower-divider">✦ ❀ ✦</div>
+    <div class="cards">
+      <div class="card"><b>Tu compañía</b><p>Porque incluso los días normales se sienten distintos cuando estás presente.</p></div>
+      <div class="card"><b>Nuestras pequeñas costumbres</b><p>Esas cosas que parecen simples, pero que con el tiempo terminan convirtiéndose en recuerdos importantes.</p></div>
+      <div class="card"><b>Todo lo que todavía falta</b><p>Los lugares, las conversaciones y los momentos que todavía no existen, pero que algún día serán parte de nuestra historia.</p></div>
+    </div>
+  </section>
+
+  <section class="paper-section">
+    <p class="kicker">Un pequeño juego</p>
+    <h2 class="title">Atrapa las cinco luciérnagas</h2>
+    <p class="sub">Cada una guarda un poquito de luz. Cuando encuentres las cinco, vas a desbloquear algo que quería decirte.</p>
+
+    <div class="game-wrap" id="game" aria-label="Minijuego de luciérnagas">
+      <div class="game-hud">
+        <div class="level" id="levelLabel">Nivel 1</div>
+        <div class="counter" id="counter">0 / 5</div>
+        <div class="time" id="timeLabel">18 s</div>
+      </div>
+      <div class="game-bar" aria-hidden="true"><span id="timeBar"></span></div>
+      <div class="game-instruction" id="gameInstruction">Atrapa las luciérnagas doradas antes de que termine el tiempo.</div>
+
+      <div class="game-message" id="gameMessage"></div>
+      <button class="game-next" id="gameNext" type="button">Siguiente nivel</button>
+
+      <div class="game-fail" id="gameFail">
+        <strong>Casi.</strong><br>
+        Este nivel se puede intentar otra vez.
+        <br>
+        <button id="retryLevel" type="button">Reintentar nivel</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="paper-section">
+    <p class="kicker">Pequeños mensajes</p>
+    <h2 class="title">Seis cosas para abrir</h2>
+    <p class="sub">No todas las palabras tienen que aparecer de golpe.</p>
+    <div class="secret-list">
+      <button class="secret" type="button"><span class="front">01 · Gracias</span><span class="back">Gracias por las veces en las que hiciste que un día común terminara siendo especial.</span></button>
+      <button class="secret" type="button"><span class="front">02 · Recuerdos</span><span class="back">Me gusta pensar que todavía estamos creando recuerdos que más adelante vamos a extrañar con cariño.</span></button>
+      <button class="secret" type="button"><span class="front">03 · Calma</span><span class="back">Hay personas que llegan a la vida y hacen que ciertas cosas se sientan un poco más tranquilas. Vos sos una de ellas para mí.</span></button>
+      <button class="secret" type="button"><span class="front">04 · Risas</span><span class="back">Quiero conservar todas esas veces en las que terminamos riéndonos por cosas que solamente nosotros entendemos.</span></button>
+      <button class="secret" type="button"><span class="front">05 · Futuro</span><span class="back">No necesito saber exactamente cómo será todo. Me alcanza con saber que todavía quiero seguir sumando momentos contigo.</span></button>
+      <button class="secret" type="button"><span class="front">06 · Vos</span><span class="back">Entre tantas personas, me alegra profundamente haber coincidido contigo.</span></button>
+    </div>
+  </section>
+
+  <section class="paper-section">
+    <p class="kicker">La parte más importante</p>
+    <h2 class="title">Para vos, Ángel</h2>
+    <article class="letter">
+      <h3>Feliz aniversario, mi amor</h3>
+      <p>Hoy no quería darte solamente un mensaje bonito. Quería dejarte algo que pudieras recorrer con calma y que, aunque sea por unos minutos, te recordara lo importante que sos para mí.</p>
+      <p>Me gusta pensar en todo lo que fuimos construyendo con el tiempo. Las conversaciones que se hicieron largas sin darnos cuenta, las risas, las pequeñas costumbres, los días buenos y también esos momentos sencillos que quizá en el instante parecían normales, pero que terminaron quedándose conmigo.</p>
+      <p>No creo que una fecha pueda resumir una relación completa. Pero sí puede servir para mirar un poquito hacia atrás y reconocer todo lo que se fue formando entre nosotros.</p>
+      <p>Gracias por estar presente en tantos recuerdos. Gracias por tu forma de acompañarme, por las cosas que compartimos y por cada pequeño momento que terminó teniendo más valor del que parecía.</p>
+      <p>También me emociona pensar en todo lo que todavía no vivimos. En esas historias que todavía no conocemos, en los días que faltan y en las cosas que algún día vamos a recordar diciendo que todo empezó mucho antes.</p>
+      <p>Hoy solamente quería recordarte algo sencillo: sos alguien muy especial para mí y me alegra que esta historia también tenga tu nombre.</p>
+      <p><strong>Feliz aniversario, Ángel. Te quiero mucho.</strong></p>
+    </article>
+
+    <button class="final-btn" id="finalBtn" type="button">Abrir una última cosa</button>
+    <div class="final-note" id="finalNote">Si volviera al comienzo y supiera todo lo que vendría después, volvería a elegir conocerte.</div>
+  </section>
+
+  <footer>
+    <h3>22 · 09</h3>
+    <p>Un día para recordar lo vivido y guardar con cariño todo lo que todavía falta.</p>
+  </footer>
+</section>
+</main>
+
+<script>
+(() => {
+  "use strict";
+  const intro=document.getElementById("intro");
+  const gift=document.getElementById("gift");
+  const openGift=document.getElementById("openGift");
+  const musicBtn=document.getElementById("musicBtn");
+  const music=document.getElementById("music");
+  const game=document.getElementById("game");
+  const counter=document.getElementById("counter");
+  const levelLabel=document.getElementById("levelLabel");
+  const timeLabel=document.getElementById("timeLabel");
+  const timeBar=document.getElementById("timeBar");
+  const gameInstruction=document.getElementById("gameInstruction");
+  const gameMessage=document.getElementById("gameMessage");
+  const gameNext=document.getElementById("gameNext");
+  const gameFail=document.getElementById("gameFail");
+  const retryLevel=document.getElementById("retryLevel");
+  const secrets=[...document.querySelectorAll(".secret")];
+  const finalBtn=document.getElementById("finalBtn");
+  const finalNote=document.getElementById("finalNote");
+
+  let currentLevel=0;
+  let found=0;
+  let levelTimer=null;
+  let moveTimer=null;
+  let remaining=0;
+  let running=false;
+  let targetCount=0;
+  let decoyHits=0;
+
+  const isCoarse=matchMedia("(pointer: coarse)").matches;
+
+  const levels=[
+    {
+      name:"Nivel 1",
+      count:5,
+      time:18,
+      moving:false,
+      decoys:0,
+      instruction:"Atrapa las 5 luciérnagas doradas antes de que termine el tiempo.",
+      success:"Primera luz guardada. A veces los recuerdos más bonitos empiezan con algo muy pequeño."
+    },
+    {
+      name:"Nivel 2",
+      count:7,
+      time:16,
+      moving:true,
+      decoys:0,
+      instruction:"Ahora se mueven. Atrapa las 7 antes de que escapen del cielo.",
+      success:"Segunda luz guardada. Me gusta pensar que incluso los momentos rápidos pueden terminar quedándose para siempre."
+    },
+    {
+      name:"Nivel 3",
+      count:8,
+      time:15,
+      moving:true,
+      decoys:3,
+      instruction:"No todas son correctas. Atrapa solo las doradas. Las plateadas te quitan tiempo.",
+      success:"Última luz guardada. Si pudiera guardar en una cajita todos los momentos que me hacen bien contigo, necesitaría mucho más espacio que este pequeño cielo."
+    }
+  ];
+
+  // estrellas decorativas
+  const sky=document.querySelector(".sky");
+  for(let i=0;i<34;i++){
+    const s=document.createElement("span");
+    s.className="star";
+    s.style.left=(Math.random()*100)+"%";
+    s.style.top=(Math.random()*70)+"%";
+    s.style.animationDelay=(Math.random()*3.5)+"s";
+    sky.appendChild(s);
+  }
+
+  openGift.addEventListener("click",()=>{
+    intro.classList.add("hide");
+    setTimeout(()=>{
+      intro.hidden=true;
+      gift.hidden=false;
+      gift.classList.add("show");
+      gift.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+    },480);
+  });
+
+  musicBtn.addEventListener("click",async()=>{
+    if(!music.paused){
+      music.pause();
+      musicBtn.textContent="♪ Poner música";
+      musicBtn.setAttribute("aria-pressed","false");
+      return;
+    }
+    try{
+      music.volume=.42;
+      await music.play();
+      musicBtn.textContent="♪ Pausar música";
+      musicBtn.setAttribute("aria-pressed","true");
+    }catch{
+      musicBtn.textContent="Agrega musica.mp3";
+    }
+  });
+
+  function rand(min,max){return Math.random()*(max-min)+min}
+
+  function clearLevel(){
+    running=false;
+    clearInterval(levelTimer);
+    clearInterval(moveTimer);
+    game.querySelectorAll(".firefly").forEach(f=>f.remove());
+  }
+
+  function placeFirefly(el){
+    const padX=isCoarse?11:8;
+    const topMin=24;
+    const bottomMax=84;
+    el.style.left=rand(padX,100-padX)+"%";
+    el.style.top=rand(topMin,bottomMax)+"%";
+  }
+
+  function createFly(decoy=false){
+    const f=document.createElement("button");
+    f.type="button";
+    f.className="firefly"+(decoy?" decoy":"");
+    f.setAttribute("aria-label",decoy?"Luciérnaga plateada":"Luciérnaga dorada");
+    placeFirefly(f);
+
+    f.addEventListener("click",()=>{
+      if(!running || f.classList.contains("caught")) return;
+
+      if(decoy){
+        decoyHits++;
+        remaining=Math.max(1,remaining-2);
+        f.classList.add("caught");
+        setTimeout(()=>f.remove(),260);
+        if(navigator.vibrate) navigator.vibrate(35);
+        return;
+      }
+
+      f.classList.add("caught");
+      found++;
+      counter.textContent=`${found} / ${targetCount}`;
+      if(navigator.vibrate) navigator.vibrate(18);
+
+      setTimeout(()=>f.remove(),260);
+
+      if(found>=targetCount){
+        completeLevel();
+      }
+    });
+
+    game.appendChild(f);
+    return f;
+  }
+
+  function moveFlies(){
+    game.querySelectorAll(".firefly").forEach(f=>{
+      if(!f.classList.contains("caught")) placeFirefly(f);
+    });
+  }
+
+  function startLevel(index){
+    clearLevel();
+
+    currentLevel=index;
+    const cfg=levels[index];
+    found=0;
+    decoyHits=0;
+    targetCount=cfg.count;
+    remaining=cfg.time;
+    running=true;
+
+    levelLabel.textContent=cfg.name;
+    counter.textContent=`0 / ${cfg.count}`;
+    timeLabel.textContent=`${remaining} s`;
+    gameInstruction.textContent=cfg.instruction;
+    gameMessage.classList.remove("show");
+    gameNext.classList.remove("show");
+    gameFail.classList.remove("show");
+    timeBar.style.transform="scaleX(1)";
+
+    for(let i=0;i<cfg.count;i++) createFly(false);
+    for(let i=0;i<cfg.decoys;i++) createFly(true);
+
+    if(cfg.moving){
+      const interval=isCoarse?1200:950;
+      moveTimer=setInterval(moveFlies,interval);
+    }
+
+    levelTimer=setInterval(()=>{
+      remaining--;
+      timeLabel.textContent=`${remaining} s`;
+      timeBar.style.transform=`scaleX(${Math.max(0,remaining/cfg.time)})`;
+
+      if(remaining<=0){
+        failLevel();
+      }
+    },1000);
+  }
+
+  function completeLevel(){
+    if(!running) return;
+    running=false;
+    clearInterval(levelTimer);
+    clearInterval(moveTimer);
+    game.querySelectorAll(".firefly").forEach(f=>f.remove());
+
+    const cfg=levels[currentLevel];
+    gameMessage.textContent=cfg.success;
+    gameMessage.classList.add("show");
+
+    if(currentLevel<levels.length-1){
+      gameNext.textContent="Siguiente nivel";
+      gameNext.classList.add("show");
+    }else{
+      gameNext.textContent="Juego completado";
+      gameNext.classList.add("show");
+      gameNext.disabled=true;
+      counter.textContent="Completado";
+      timeLabel.textContent="✓";
+    }
+  }
+
+  function failLevel(){
+    if(!running) return;
+    running=false;
+    clearInterval(levelTimer);
+    clearInterval(moveTimer);
+    game.querySelectorAll(".firefly").forEach(f=>f.remove());
+    gameFail.classList.add("show");
+  }
+
+  gameNext.addEventListener("click",()=>{
+    if(currentLevel<levels.length-1) startLevel(currentLevel+1);
+  });
+
+  retryLevel.addEventListener("click",()=>startLevel(currentLevel));
+
+  let gameStarted=false;
+  const gameObserver=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting && !gameStarted && gift.classList.contains("show")){
+        gameStarted=true;
+        startLevel(0);
+        gameObserver.disconnect();
+      }
+    });
+  },{threshold:.38});
+  gameObserver.observe(game);
+
+  secrets.forEach(s=>{
+    s.addEventListener("click",()=>{
+      const opened=s.classList.toggle("opened");
+      s.setAttribute("aria-expanded",String(opened));
+    });
+  });
+
+  finalBtn.addEventListener("click",()=>{
+    finalBtn.hidden=true;
+    finalNote.classList.add("show");
+  });
+})();
+</script>
+</body>
+</html>
